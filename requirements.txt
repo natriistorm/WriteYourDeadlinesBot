@@ -32,7 +32,6 @@ requests-oauthlib==1.3.0
 rsa==4.7.2
 schedule==1.1.0
 six==1.15.0
-telegram==0.0.1
 telepot==12.7
 tornado==6.1
 typing-extensions==3.10.0.0
