@@ -1,4 +1,4 @@
-import config
+import temp
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import (
     CallbackQueryHandler,
@@ -26,36 +26,38 @@ def start(update: Update, _: CallbackContext) -> int:
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     update.message.reply_text("Что мне сделать?", reply_markup=reply_markup)
-    return FIRST
+    return BEGIN_STAGE
 
-def one(update: Update, _: CallbackContext) -> int:
+
+def name(update: Update, _: CallbackContext) -> int:
     query = update.callback_query
     query.answer()
     user_data.append('Add')
     query.edit_message_text(text="Введите название мероприятия")
-    return T
+    return EVENT_DESCRIPTION
 
 
-def two(update: Update, _: CallbackContext) -> int:
+def description(update: Update, _: CallbackContext) -> int:
     user = update.message.from_user
     user_data.append(update.message.text)
     update.message.reply_text(text="Введите описание мероприятия")
-    return THIRD
+    return START_EVENT
 
 
-def three(update: Update, _: CallbackContext) -> int:
+def start_event(update: Update, _: CallbackContext) -> int:
     user = update.message.from_user
     user_data.append(update.message.text)
     update.message.reply_text(text="Введите дату начала мероприятия в формате день-месяц-год")
-    return FOURTH
+    return END_EVENT
 
 
-def four(update: Update, _: CallbackContext) -> int:
+def end_event(update: Update, _: CallbackContext) -> int:
     user = update.message.from_user
     start_str = update.message.text
     user_data.append(start_str)
     update.message.reply_text(text="Введите дату окончания мероприятия в формате день-месяц-год")
-    return SECOND
+    return END_STAGE
+
 
 def checker(update: Update, _: CallbackContext) -> int:
     query = update.callback_query
@@ -73,12 +75,13 @@ def adder_end(update: Update, _: CallbackContext) -> int:
     update.message.reply_text(text="Готово!")
     return ConversationHandler.END
 
+
 def get_email():
     pass
 
 
 def main() -> None:
-    updater = Updater(config.TOKEN)
+    updater = Updater(temp.TOKEN)
 
     dispatcher = updater.dispatcher
 
@@ -86,20 +89,20 @@ def main() -> None:
         entry_points=[CommandHandler('start', start)],
         states={
             BEGIN_STAGE: [
-                CallbackQueryHandler(one, pattern='^' + str(ONE) + '$'),
+                CallbackQueryHandler(name, pattern='^' + str(ONE) + '$'),
                 CallbackQueryHandler(checker, pattern='^' + str(TWO) + '$'),
             ],
             END_STAGE: [
                 MessageHandler(Filters.text, adder_end)
             ],
             EVENT_DESCRIPTION: [
-                MessageHandler(Filters.text, two),
+                MessageHandler(Filters.text, description),
             ],
             START_EVENT: [
-                MessageHandler(Filters.text, three)
+                MessageHandler(Filters.text, start_event)
             ],
             END_EVENT: [
-                MessageHandler(Filters.text, four)
+                MessageHandler(Filters.text, end_event)
             ],
             EMAIL: [
                 MessageHandler(Filters.text, get_email)

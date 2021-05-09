@@ -1,7 +1,6 @@
 from __future__ import print_function
 import datetime
 import time
-import config
 import googleapiclient
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
@@ -46,7 +45,7 @@ class GoogleCalendar(object):
         events = events_result.get('items', [])
         answer = []
         if not events:
-            answer.append('No upcoming events found.')
+            answer.append('Нет предстоящих событий.')
 
         for event in events:
             start = event['start'].get('dateTime',
