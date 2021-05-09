@@ -1,2 +1,2 @@
 TOKEN = '1761311450:AAF-0u38T5wQ7VDxK-9mb03Y3OmC8GAfev0'
-SERVICE_ACCOUNT_FILE = 'client_info.json'
+SERVICE_ACCOUNT_FILE = './client_info.json'
