@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "addingtaskstocalendar",
+  "private_key_id": "8212cc79a863e5c8df6f1037bd1ed6383dff156a",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDUV0yknSEfH7XA\nezBUtCPGS5qfvC4OHuz3Hya+ofPMe3FR9q0k5//bcMnbOapSvn1ZECa8EHogadG6\nDJvZjAIlNKRqYsVpDNJtP1GGnG46Yxgk9RUcyOPok9gL0Lc5Ww2VTiUYK7dTIb/b\nnRluG39MAMIKg7asaZcJSdQFA4w4DRWbobBzpFt62x5QGccZWhhsQZk6uVht82eT\nyfC17XEcq+Y0l33oH26Iv4hNuVYbn5+vsZEf8pk2k1q4NMnqjyvwhvBwqFPGv4Gx\n8cJkKqxHNmNTK2su9ufYKheOdrPxhPFD6mdPpnFjhflTe4RufnFr8CeriOhZdQZ2\nbNny+znrAgMBAAECggEACU90Y0tfkRPLFXN7/QV2WW9CUXquJA8HhU9EIvggQEAj\nJk5u0KLI2dWqMlwfz/JPJ89zfDor1gMcA0Jbmwduim1O6uUFy1GY0/ZX4zbgP03N\n5sR+dn1OsO0P7gSx4/aVbMZHRv0lfqRP97QL7oNWlVM0Em3zlobSs93HuzbFRn7r\neLrnamOgo4Ob1bNCCq3wlq5BmJQ4+LUJDMNlP5u7YYVGSaOHW49UjB5Xt39TlTmt\nyZtf1eh/eXrEY2sBYBpmSAWYatB7p9UWaCjkVJiXaKbwFaVopqrNViLnEZcVSLur\noSowSeOfxhA73TsRn105RJbZWcxuGJtfiFAY8vgzsQKBgQDxbYIRUl4ga+f8kXZR\nvJEUYbKepbdLfxN1/wNJb7nYYGC+vvyt7rAxEIS30+AFXS6OplHwUrVgYn6qFheo\nhbg3qJRZ0pjSUNF1IpkaphdibJdJaSqqD59lr2LDuD0TJ+bpU+DCUbjWkhQGC0kl\n0/q9GR47NXdX/lYLO1DYLMTXzQKBgQDhKFlMV0STO7WZo8t98LaC0+vxSDXXR08g\nrWJRuC/ObugV1mkXceZU5kN17939hqOjSL2Ol7eGnUepA7q000UNhlcUkkzGvkNB\naCaLQpOJGEd91r7hveNvn+DRcmm3nEuVCdR/Y8YPUGKiMzUk9GDsaAhK6o5gQUDm\n0/VZV4+wlwKBgHp9yCdHtjAW734Kw5BW7vj7VKf/hk8Mq3ALsbw5rn4k8BD3T7Zj\nywspyVyHaDrweyWvJxWasSG093UOfnRnW/8JTjOAkT7r+EnJAwstR+INHHkHnbjo\n8kOiR6brvDkS3qp1fyy4T+K1/OjQIw3JTodQzjDWQLXpefh64Nq9ZCXlAoGBAJEU\nw72aOdi5T8HpNjU3hxLz5QN7KR5Hl6gRsNnBWiSleCyiFOODhAxOt0dmQV+cgxKy\ny1n3Ts2RyNwSSBs+Sy900eWyg4BIluOtbbCsPI7JMz/VwPeKuONzXJT5KT+jmVw2\nklNngfbaMEQdxO/D/DQ4sKc9TnKdeWmDSIPCFRePAoGBANlIAD1iTHMkb2h5lnMN\nQwy30H1DecwdMeKFxl8+DHXf27fwC2nNV/jwuOZUubKjK7enZiCC6hIBnKHfhJUJ\nVhR+1Y+Fdr6ZtObJdp4o2HnpRePgIvryvEMKWlvobflRgl1T/Kavg0QlV3VIXiKr\n05ZyLY3WmHOiwdKBZ3MU9Xjp\n-----END PRIVATE KEY-----\n",
+  "client_email": "telegram-bot@addingtaskstocalendar.iam.gserviceaccount.com",
+  "client_id": "114625324540774399859",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/telegram-bot%40addingtaskstocalendar.iam.gserviceaccount.com"
+}
