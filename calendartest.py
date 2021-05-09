@@ -1,6 +1,7 @@
 from __future__ import print_function
 import datetime
 import time
+import temp
 import googleapiclient
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
@@ -12,7 +13,7 @@ class GoogleCalendar(object):
     calendarId = 'c_4id5047dn2h8j29rbjvagkls5o@group.calendar.google.com'
 
     def __init__(self, data: list):
-        credentials = service_account.Credentials.from_service_account_file(config.SERVICE_ACCOUNT_FILE, scopes=SCOPES)
+        credentials = service_account.Credentials.from_service_account_file(temp.SERVICE_ACCOUNT_FILE, scopes=SCOPES)
         self.service = googleapiclient.discovery.build('calendar', 'v3', credentials=credentials)
         self.user_data = data
         if data[0] == 'Add':
