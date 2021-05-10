@@ -16,29 +16,28 @@ PORT = int(os.environ.get('PORT', '8443'))
 
 BEGIN_STAGE, END_STAGE, EVENT_DESCRIPTION, START_EVENT, END_EVENT, EMAIL = range(6)
 user_data = []
-user = User
 
 
-def get_email(update: Update, _: CallbackContext):
+def get_email(update: Update, _: CallbackContext, user_id):
     user_message = update.message.from_user
-    #user_data.append(update.message.text)
     update.message.reply_text(text="Введи ID твоего календаря")
-    hand_email(update, _)
+    hand_email(update, _, user_id)
 
 
-def hand_email(update: Update, _: CallbackContext):
+def hand_email(update: Update, _: CallbackContext, user_id):
     user_message = update.message.from_user
-    users_emails.users[user.id] = update.message.text
-    user_data.append(users_emails.users[user.id])
+    users_emails.users[user_id] = update.message.text
+    user_data.append(update.message.text)
     update.message.reply_text(text="Подключаюсь..")
 
 
 def start(update: Update, _: CallbackContext) -> int:
+    user_id = update.message.chat_id
     user_data.clear()
-    if user.id not in users_emails.users:
-        get_email(update, _)
+    if user_id not in users_emails.users:
+        get_email(update, _, user_id)
     else:
-        user_data.append(users_emails.users[user.id])
+        user_data.append(users_emails.users[user_id])
     keyboard = [
         [
             InlineKeyboardButton("Добавить событие в календарь", callback_data=str(1)),
