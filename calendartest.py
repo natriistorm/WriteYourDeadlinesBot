@@ -10,16 +10,16 @@ SCOPES = ['https://www.googleapis.com/auth/calendar']
 
 
 class GoogleCalendar(object):
-    calendarId = 'c_4id5047dn2h8j29rbjvagkls5o@group.calendar.google.com'
 
     def __init__(self, data: list):
         credentials = service_account.Credentials.from_service_account_file(temp.SERVICE_ACCOUNT_FILE, scopes=SCOPES)
         self.service = googleapiclient.discovery.build('calendar', 'v3', credentials=credentials)
         self.user_data = data
-        if data[0] == 'Add':
+        self.calendarId = data[0]
+        if data[1] == 'Add':
             event = self.create_event_dict()
             self.create_event(event)
-        elif data[0] == 'Check':
+        elif data[1] == 'Check':
             self.answer = self.get_events_list()
 
     def create_event_dict(self) -> dict:

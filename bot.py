@@ -1,5 +1,6 @@
 import temp
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
+import users_emails
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update, User
 from telegram.ext import (
     CallbackQueryHandler,
     Updater,
@@ -13,12 +14,30 @@ import calendartest
 import os
 PORT = int(os.environ.get('PORT', '8443'))
 
-
 user_data = []
-
+user = User
 BEGIN_STAGE, END_STAGE, EVENT_DESCRIPTION, START_EVENT, END_EVENT, EMAIL = range(6)
 
+
+def get_email(update: Update, _: CallbackContext):
+    user_message = update.message.from_user
+    #user_data.append(update.message.text)
+    update.message.reply_text(text="Введи ID твоего календаря")
+    hand_email(update, _)
+
+
+def hand_email(update: Update, _: CallbackContext):
+    user_message = update.message.from_user
+    users_emails.users[user.id] = update.message.text
+    user_data.append(users_emails.users[user.id])
+    update.message.reply_text(text="Подключаюсь..")
+
+
 def start(update: Update, _: CallbackContext) -> int:
+    if user.id not in users_emails.users:
+        get_email(update, _)
+    else:
+        user_data.append(users_emails.users[user.id])
     keyboard = [
         [
             InlineKeyboardButton("Добавить событие в календарь", callback_data=str(1)),
@@ -77,9 +96,6 @@ def adder_end(update: Update, _: CallbackContext) -> int:
     return ConversationHandler.END
 
 
-def get_email():
-    pass
-
 
 def main() -> None:
     updater = Updater(temp.TOKEN)
@@ -106,7 +122,7 @@ def main() -> None:
                 MessageHandler(Filters.text, end_event)
             ],
             EMAIL: [
-                MessageHandler(Filters.text, get_email)
+                MessageHandler(Filters.text, hand_email)
             ]
         },
         fallbacks=[CommandHandler('start', start)],
