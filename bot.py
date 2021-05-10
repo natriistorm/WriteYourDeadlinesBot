@@ -69,7 +69,7 @@ def description(update: Update, _: CallbackContext) -> int:
 def start_event(update: Update, _: CallbackContext) -> int:
     user = update.message.from_user
     user_data.append(update.message.text)
-    update.message.reply_text(text="Введите дату начала мероприятия в формате день-месяц-год")
+    update.message.reply_text(text="Введите дату начала мероприятия в формате час-день-месяц-год")
     return END_EVENT
 
 
@@ -77,7 +77,7 @@ def end_event(update: Update, _: CallbackContext) -> int:
     user = update.message.from_user
     start_str = update.message.text
     user_data.append(start_str)
-    update.message.reply_text(text="Введите дату окончания мероприятия в формате день-месяц-год")
+    update.message.reply_text(text="Введите дату окончания мероприятия в формате час-день-месяц-год")
     return END_STAGE
 
 

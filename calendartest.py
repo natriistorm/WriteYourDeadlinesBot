@@ -23,15 +23,19 @@ class GoogleCalendar(object):
             self.answer = self.get_events_list()
 
     def create_event_dict(self) -> dict:
-        date_start_list = self.user_data[3].split('-')
-        date_start_time = datetime.time(0, 0, 0).isoformat()
-        date_start = datetime.datetime(int(date_start_list[2]), int(date_start_list[1]),
-                                       int(date_start_list[0])).isoformat()
+        date_start_list = self.user_data[4].split('-')
+        start_hour = int(date_start_list[0])
+        date_start = datetime.datetime(int(date_start_list[3]), int(date_start_list[2]),
+                                       int(date_start_list[1]), start_hour).isoformat() + 'Z'
+        date_end_list = self.user_data[5].split('-')
+        end_hour = int(date_end_list[0])
+        date_end = datetime.datetime(int(date_end_list[3]), int(date_end_list[2]),
+                                       int(date_end_list[1]), end_hour).isoformat() + 'Z'
         event = {
-            'summary': self.user_data[1],
-            'description': self.user_data[2],
-            'start': {'dateTime': datetime.datetime.fromtimestamp(round(time.time()) - 2000).isoformat() + 'Z'},
-            'end': {'dateTime': datetime.datetime.fromtimestamp(round(time.time()) + +7000).isoformat() + 'Z'}
+            'summary': self.user_data[2],
+            'description': self.user_data[3],
+            'start': {'dateTime': date_start},
+            'end': {'dateTime': date_end}
         }
         return event
 
