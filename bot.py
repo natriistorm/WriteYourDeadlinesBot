@@ -32,6 +32,7 @@ def hand_email(update: Update, _: CallbackContext):
     update.message.reply_text(text="Подключаюсь..")
     return start(update, _)
 
+
 def start(update: Update, _: CallbackContext) -> int:
     user_id = update.message.chat_id
     user_data.clear()
