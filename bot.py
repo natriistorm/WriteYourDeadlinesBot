@@ -14,9 +14,9 @@ import calendartest
 import os
 PORT = int(os.environ.get('PORT', '8443'))
 
+BEGIN_STAGE, END_STAGE, EVENT_DESCRIPTION, START_EVENT, END_EVENT, EMAIL = range(6)
 user_data = []
 user = User
-BEGIN_STAGE, END_STAGE, EVENT_DESCRIPTION, START_EVENT, END_EVENT, EMAIL = range(6)
 
 
 def get_email(update: Update, _: CallbackContext):
@@ -34,6 +34,7 @@ def hand_email(update: Update, _: CallbackContext):
 
 
 def start(update: Update, _: CallbackContext) -> int:
+    user_data.clear()
     if user.id not in users_emails.users:
         get_email(update, _)
     else:
@@ -96,8 +97,8 @@ def adder_end(update: Update, _: CallbackContext) -> int:
     return ConversationHandler.END
 
 
-
 def main() -> None:
+
     updater = Updater(temp.TOKEN)
 
     dispatcher = updater.dispatcher
