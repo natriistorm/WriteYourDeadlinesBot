@@ -1,4 +1,4 @@
-import temp
+import config
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import (
     CallbackQueryHandler,
@@ -10,55 +10,52 @@ from telegram.ext import (
     CallbackContext,
 )
 import calendartest
-import os
-PORT = int(os.environ.get('PORT', 5000))
-
 
 user_data = []
 
 BEGIN_STAGE, END_STAGE, EVENT_DESCRIPTION, START_EVENT, END_EVENT, EMAIL = range(6)
+ONE, TWO, THREE = range(3)
+
 
 def start(update: Update, _: CallbackContext) -> int:
     keyboard = [
         [
-            InlineKeyboardButton("Добавить событие в календарь", callback_data=str(1)),
-            InlineKeyboardButton("Просмотреть ближайшие события", callback_data=str(2)),
+            InlineKeyboardButton("Добавить событие в календарь", callback_data=str(ONE)),
+            InlineKeyboardButton("Просмотреть ближайшие события", callback_data=str(TWO)),
         ]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     update.message.reply_text("Что мне сделать?", reply_markup=reply_markup)
-    return BEGIN_STAGE
+    return FIRST
 
-
-def name(update: Update, _: CallbackContext) -> int:
+def one(update: Update, _: CallbackContext) -> int:
     query = update.callback_query
     query.answer()
     user_data.append('Add')
     query.edit_message_text(text="Введите название мероприятия")
-    return EVENT_DESCRIPTION
+    return T
 
 
-def description(update: Update, _: CallbackContext) -> int:
+def two(update: Update, _: CallbackContext) -> int:
     user = update.message.from_user
     user_data.append(update.message.text)
     update.message.reply_text(text="Введите описание мероприятия")
-    return START_EVENT
+    return THIRD
 
 
-def start_event(update: Update, _: CallbackContext) -> int:
+def three(update: Update, _: CallbackContext) -> int:
     user = update.message.from_user
     user_data.append(update.message.text)
     update.message.reply_text(text="Введите дату начала мероприятия в формате день-месяц-год")
-    return END_EVENT
+    return FOURTH
 
 
-def end_event(update: Update, _: CallbackContext) -> int:
+def four(update: Update, _: CallbackContext) -> int:
     user = update.message.from_user
     start_str = update.message.text
     user_data.append(start_str)
     update.message.reply_text(text="Введите дату окончания мероприятия в формате день-месяц-год")
-    return END_STAGE
-
+    return SECOND
 
 def checker(update: Update, _: CallbackContext) -> int:
     query = update.callback_query
@@ -76,13 +73,12 @@ def adder_end(update: Update, _: CallbackContext) -> int:
     update.message.reply_text(text="Готово!")
     return ConversationHandler.END
 
-
 def get_email():
     pass
 
 
 def main() -> None:
-    updater = Updater(temp.TOKEN)
+    updater = Updater(config.TOKEN)
 
     dispatcher = updater.dispatcher
 
@@ -90,20 +86,20 @@ def main() -> None:
         entry_points=[CommandHandler('start', start)],
         states={
             BEGIN_STAGE: [
-                CallbackQueryHandler(name, pattern='^' + str(1) + '$'),
-                CallbackQueryHandler(checker, pattern='^' + str(2) + '$'),
+                CallbackQueryHandler(one, pattern='^' + str(ONE) + '$'),
+                CallbackQueryHandler(checker, pattern='^' + str(TWO) + '$'),
             ],
             END_STAGE: [
                 MessageHandler(Filters.text, adder_end)
             ],
             EVENT_DESCRIPTION: [
-                MessageHandler(Filters.text, description),
+                MessageHandler(Filters.text, two),
             ],
             START_EVENT: [
-                MessageHandler(Filters.text, start_event)
+                MessageHandler(Filters.text, three)
             ],
             END_EVENT: [
-                MessageHandler(Filters.text, end_event)
+                MessageHandler(Filters.text, four)
             ],
             EMAIL: [
                 MessageHandler(Filters.text, get_email)
@@ -114,10 +110,7 @@ def main() -> None:
 
     dispatcher.add_handler(conv_handler)
 
-    updater.start_webhook(listen="0.0.0.0",
-                          port=int(PORT),
-                          url_path=temp.TOKEN)
-    updater.bot.setWebhook('https://writeyourdeadlinesbot.herokuapp.com/' + temp.TOKEN)
+    updater.start_polling()
 
     updater.idle()
 
