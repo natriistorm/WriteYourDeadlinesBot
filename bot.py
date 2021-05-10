@@ -11,7 +11,7 @@ from telegram.ext import (
 )
 import calendartest
 import os
-PORT = int(os.environ.get('PORT', 8443))
+PORT = int(os.environ.get('PORT', '8443'))
 
 
 user_data = []
@@ -116,8 +116,8 @@ def main() -> None:
 
     updater.start_webhook(listen="0.0.0.0",
                           port=int(PORT),
-                          url_path=temp.TOKEN)
-    updater.bot.setWebhook('https://writeyourdeadlinesbot.herokuapp.com/' + temp.TOKEN)
+                          url_path=temp.TOKEN,
+                          webhook_url='https://writeyourdeadlinesbot.herokuapp.com/' + temp.TOKEN)
 
     updater.idle()
 
