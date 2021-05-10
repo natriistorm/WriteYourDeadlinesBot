@@ -36,7 +36,7 @@ def start(update: Update, _: CallbackContext) -> int:
     user_id = update.message.chat_id
     user_data.clear()
     if user_id not in users_emails.users:
-        get_email(update, _, user_id)
+        get_email(update, _)
     else:
         user_data.append(users_emails.users[user_id])
     keyboard = [
