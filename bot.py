@@ -18,18 +18,19 @@ BEGIN_STAGE, END_STAGE, EVENT_DESCRIPTION, START_EVENT, END_EVENT, EMAIL = range
 user_data = []
 
 
-def get_email(update: Update, _: CallbackContext, user_id):
+def get_email(update: Update, _: CallbackContext):
     user_message = update.message.from_user
     update.message.reply_text(text="Введи ID твоего календаря")
-    hand_email(update, _, user_id)
+    return EMAIL
 
 
-def hand_email(update: Update, _: CallbackContext, user_id):
+def hand_email(update: Update, _: CallbackContext):
+    user_id = update.message.chat_id
     user_message = update.message.from_user
     users_emails.users[user_id] = update.message.text
     user_data.append(update.message.text)
     update.message.reply_text(text="Подключаюсь..")
-
+    return start(update, _)
 
 def start(update: Update, _: CallbackContext) -> int:
     user_id = update.message.chat_id
