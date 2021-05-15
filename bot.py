@@ -12,11 +12,12 @@ from telegram.ext import (
 )
 import calendartest
 import os
+from boto.s3.connection import S3Connection
+TOKEN = S3Connection(os.environ['TOKEN'])
 PORT = int(os.environ.get('PORT', '8443'))
 
 BEGIN_STAGE, END_STAGE, EVENT_DESCRIPTION, START_EVENT, END_EVENT, EMAIL = range(6)
 user_data = []
-
 
 def get_email(update: Update, _: CallbackContext):
     user_message = update.message.from_user
@@ -100,7 +101,7 @@ def adder_end(update: Update, _: CallbackContext) -> int:
 
 def main() -> None:
 
-    updater = Updater(temp.TOKEN)
+    updater = Updater(BOT_TOKEN)
 
     dispatcher = updater.dispatcher
 
@@ -134,8 +135,8 @@ def main() -> None:
 
     updater.start_webhook(listen="0.0.0.0",
                           port=int(PORT),
-                          url_path=temp.TOKEN,
-                          webhook_url='https://writeyourdeadlinesbot.herokuapp.com/' + temp.TOKEN)
+                          url_path=BOT_TOKEN,
+                          webhook_url='https://writeyourdeadlinesbot.herokuapp.com/' + BOT_TOKEN)
 
     updater.idle()
 

@@ -1,6 +1,5 @@
 from __future__ import print_function
 import datetime
-import time
 import temp
 import googleapiclient
 from google.oauth2 import service_account
