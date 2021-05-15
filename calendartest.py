@@ -8,7 +8,6 @@ from googleapiclient.discovery import build
 
 SCOPES = ['https://www.googleapis.com/auth/calendar']
 
-
 class GoogleCalendar(object):
 
     def __init__(self, data: list):
@@ -25,12 +24,26 @@ class GoogleCalendar(object):
     def create_event_dict(self) -> dict:
         date_start_list = self.user_data[4].split('-')
         start_hour = int(date_start_list[0])
-        date_start = datetime.datetime(int(date_start_list[3]), int(date_start_list[2]),
+        if start_hour >= 3:
+            start_hour = start_hour - 3
+            date_start = datetime.datetime(int(date_start_list[3]), int(date_start_list[2]),
                                        int(date_start_list[1]), start_hour).isoformat() + 'Z'
+        else:
+            start_hour = start_hour + 21
+            date_minused = datetime.datetime(int(date_start_list[3]), int(date_start_list[2]),
+                                           int(date_start_list[1]), start_hour) - datetime.timedelta(days=1)
+            date_start = date_minused.isoformat() + 'Z'
         date_end_list = self.user_data[5].split('-')
         end_hour = int(date_end_list[0])
-        date_end = datetime.datetime(int(date_end_list[3]), int(date_end_list[2]),
-                                       int(date_end_list[1]), end_hour).isoformat() + 'Z'
+        if end_hour >= 3:
+            end_hour = end_hour - 3
+            date_end = datetime.datetime(int(date_end_list[3]), int(date_end_list[2]),
+                                           int(date_end_list[1]), end_hour - 3).isoformat() + 'Z'
+        else:
+            end_hour = end_hour + 21
+            date_end = datetime.datetime(int(date_end_list[3]), int(date_end_list[2]),
+                                           int(date_end_list[1]), 21 + end_hour) - datetime.timedelta(days=1)
+            date_end = date_minused.isoformat() + 'Z'
         event = {
             'summary': self.user_data[2],
             'description': self.user_data[3],
