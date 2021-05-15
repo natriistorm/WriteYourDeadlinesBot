@@ -12,8 +12,9 @@ from telegram.ext import (
 )
 import calendartest
 import os
-from boto.s3.connection import S3Connection
-TOKEN = S3Connection(os.environ['TOKEN'])
+import environ
+env = environ.Env()
+TOKEN = env('TOKEN')
 PORT = int(os.environ.get('PORT', '8443'))
 
 BEGIN_STAGE, END_STAGE, EVENT_DESCRIPTION, START_EVENT, END_EVENT, EMAIL = range(6)
