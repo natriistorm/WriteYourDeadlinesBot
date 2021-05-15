@@ -37,11 +37,11 @@ class GoogleCalendar(object):
         if end_hour >= 3:
             end_hour = end_hour - 3
             date_end = datetime.datetime(int(date_end_list[3]), int(date_end_list[2]),
-                                           int(date_end_list[1]), end_hour - 3).isoformat() + 'Z'
+                                           int(date_end_list[1]), end_hour).isoformat() + 'Z'
         else:
             end_hour = end_hour + 21
             date_end = datetime.datetime(int(date_end_list[3]), int(date_end_list[2]),
-                                           int(date_end_list[1]), 21 + end_hour) - datetime.timedelta(days=1)
+                                           int(date_end_list[1]), end_hour) - datetime.timedelta(days=1)
             date_end = date_minused.isoformat() + 'Z'
         event = {
             'summary': self.user_data[2],
