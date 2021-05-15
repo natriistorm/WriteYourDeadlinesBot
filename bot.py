@@ -12,9 +12,8 @@ from telegram.ext import (
 )
 import calendartest
 import os
-import environ
-env = environ.Env()
-TOKEN = env('TOKEN')
+
+BOT_TOKEN = os.getenv('TOKEN', 'youwillneverknow')
 PORT = int(os.environ.get('PORT', '8443'))
 
 BEGIN_STAGE, END_STAGE, EVENT_DESCRIPTION, START_EVENT, END_EVENT, EMAIL = range(6)
