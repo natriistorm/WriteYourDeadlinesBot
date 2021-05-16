@@ -2,7 +2,7 @@
 
 # WriteYourDeadlinesBot
 
-Собственно бот : @WriteYourTasksBot
+Собственно бот : @WriteYourDeadlinesBot
 
 Концепт:
  боту сообщается ID вашего Google Calendar, и он добавляет туда события или может проверять предстоящие события.
