@@ -88,7 +88,10 @@ def checker(update: Update, _: CallbackContext) -> int:
     query.answer()
     user_data.append('Check')
     calendar = calendartest.GoogleCalendar(user_data)
-    query.edit_message_text(text=calendar.answer)
+    answer = ""
+    for event in calendar.get_events_list():
+        answer += event[0] + ' ' + event[1] + '\n'
+    query.edit_message_text(text=answer)
     return ConversationHandler.END
 
 

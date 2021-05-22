@@ -69,4 +69,5 @@ class GoogleCalendar(object):
                                        event['start'].get('date'))
 
             answer.append((start, event['summary']))
-        return answer
+        for event in answer:
+            yield event
