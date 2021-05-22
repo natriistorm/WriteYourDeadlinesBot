@@ -13,7 +13,7 @@ from telegram.ext import (
 import calendartest
 import os
 
-BOT_TOKEN = os.getenv('TOKEN', '1894706722:AAHGDC_ovMgZmNro0SzIlbNFM_9aFxpJshM')
+BOT_TOKEN = os.getenv('TOKEN')
 PORT = int(os.environ.get('PORT', '8443'))
 
 HELP, BEGIN_STAGE, END_STAGE, EVENT_DESCRIPTION, START_EVENT, END_EVENT, EMAIL = range(7)
