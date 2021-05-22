@@ -67,7 +67,11 @@ class GoogleCalendar(object):
         for event in events:
             start = event['start'].get('dateTime',
                                        event['start'].get('date'))
-
-            answer.append((start, event['summary']))
+            output_str_date_array = start.split('T')[0].split('-')
+            output_str_hour = start.split('T')[1].split(':')[0]
+            final_output = output_str_hour + ':00'
+            for i in range(3):
+                final_output += '-' + output_str_date_array[2 - i]
+            answer.append((final_output, event['summary']))
         for event in answer:
             yield event
