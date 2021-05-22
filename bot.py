@@ -16,7 +16,7 @@ import os
 BOT_TOKEN = os.getenv('TOKEN')
 PORT = int(os.environ.get('PORT', '8443'))
 
-HELP, BEGIN_STAGE, END_STAGE, EVENT_DESCRIPTION, START_EVENT, END_EVENT, EMAIL = range(7)
+BEGIN_STAGE, END_STAGE, EVENT_DESCRIPTION, START_EVENT, END_EVENT, EMAIL = range(6)
 user_data = []
 
 def get_email(update: Update, _: CallbackContext):
@@ -100,8 +100,9 @@ def adder_end(update: Update, _: CallbackContext) -> int:
     return ConversationHandler.END
 
 
-def helper(update: Update, _: CallbackContext):
-    print('Привет! Добавь меня в свой календарь и напиши /start')
+def helper(stage: int) -> int:
+    print('Привет! Добавь меня в свой календарь и напиши /start. Если ты уже добавил - просто напиши /start')
+    return stage
 
 
 def main() -> None:
@@ -116,24 +117,30 @@ def main() -> None:
             BEGIN_STAGE: [
                 CallbackQueryHandler(name, pattern='^' + str(1) + '$'),
                 CallbackQueryHandler(checker, pattern='^' + str(2) + '$'),
+                CommandHandler('help', helper(0))
             ],
             END_STAGE: [
-                MessageHandler(Filters.text, adder_end)
+                MessageHandler(Filters.text, adder_end),
+                CommandHandler('help', helper(1))
             ],
             EVENT_DESCRIPTION: [
                 MessageHandler(Filters.text, description),
+                CommandHandler('help', helper(2))
             ],
             START_EVENT: [
-                MessageHandler(Filters.text, start_event)
+                MessageHandler(Filters.text, start_event),
+                CommandHandler('help', helper(3))
             ],
             END_EVENT: [
-                MessageHandler(Filters.text, end_event)
+                MessageHandler(Filters.text, end_event),
+                CommandHandler('help', helper(4))
             ],
             EMAIL: [
-                MessageHandler(Filters.text, hand_email)
+                MessageHandler(Filters.text, hand_email),
+                CommandHandler('help', helper(5))
             ]
         },
-        fallbacks=[CommandHandler('help', helper)],
+        fallbacks=[CommandHandler('start', start)],
     )
 
     dispatcher.add_handler(conv_handler)
