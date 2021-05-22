@@ -13,10 +13,10 @@ from telegram.ext import (
 import calendartest
 import os
 
-BOT_TOKEN = os.getenv('TOKEN', 'youwillneverknow')
+BOT_TOKEN = os.getenv('TOKEN', '1894706722:AAHGDC_ovMgZmNro0SzIlbNFM_9aFxpJshM')
 PORT = int(os.environ.get('PORT', '8443'))
 
-BEGIN_STAGE, END_STAGE, EVENT_DESCRIPTION, START_EVENT, END_EVENT, EMAIL = range(6)
+HELP, BEGIN_STAGE, END_STAGE, EVENT_DESCRIPTION, START_EVENT, END_EVENT, EMAIL = range(7)
 user_data = []
 
 def get_email(update: Update, _: CallbackContext):
@@ -50,6 +50,7 @@ def start(update: Update, _: CallbackContext) -> int:
     reply_markup = InlineKeyboardMarkup(keyboard)
     update.message.reply_text("Что мне сделать?", reply_markup=reply_markup)
     return BEGIN_STAGE
+
 
 
 def name(update: Update, _: CallbackContext) -> int:
@@ -99,6 +100,10 @@ def adder_end(update: Update, _: CallbackContext) -> int:
     return ConversationHandler.END
 
 
+def helper(update: Update, _: CallbackContext):
+    print('Привет! Добавь меня в свой календарь и напиши /start')
+
+
 def main() -> None:
 
     updater = Updater(BOT_TOKEN)
@@ -106,7 +111,7 @@ def main() -> None:
     dispatcher = updater.dispatcher
 
     conv_handler = ConversationHandler(
-        entry_points=[CommandHandler('start', start)],
+        entry_points=[CommandHandler('start', start), CommandHandler('help', helper)],
         states={
             BEGIN_STAGE: [
                 CallbackQueryHandler(name, pattern='^' + str(1) + '$'),
@@ -128,7 +133,7 @@ def main() -> None:
                 MessageHandler(Filters.text, hand_email)
             ]
         },
-        fallbacks=[CommandHandler('start', start)],
+        fallbacks=[CommandHandler('help', helper)],
     )
 
     dispatcher.add_handler(conv_handler)
