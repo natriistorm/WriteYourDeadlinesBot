@@ -117,27 +117,21 @@ def main() -> None:
             BEGIN_STAGE: [
                 CallbackQueryHandler(name, pattern='^' + str(1) + '$'),
                 CallbackQueryHandler(checker, pattern='^' + str(2) + '$'),
-                CommandHandler('help', helper(0))
             ],
             END_STAGE: [
-                MessageHandler(Filters.text, adder_end),
-                CommandHandler('help', helper(1))
+                MessageHandler(Filters.text & ~Filters.command, adder_end),
             ],
             EVENT_DESCRIPTION: [
-                MessageHandler(Filters.text, description),
-                CommandHandler('help', helper(2))
+                MessageHandler(Filters.text & ~Filters.command, description),
             ],
             START_EVENT: [
-                MessageHandler(Filters.text, start_event),
-                CommandHandler('help', helper(3))
+                MessageHandler(Filters.text & ~Filters.command, start_event),
             ],
             END_EVENT: [
-                MessageHandler(Filters.text, end_event),
-                CommandHandler('help', helper(4))
+                MessageHandler(Filters.text & ~Filters.command, end_event),
             ],
             EMAIL: [
-                MessageHandler(Filters.text, hand_email),
-                CommandHandler('help', helper(5))
+                MessageHandler(Filters.text & ~Filters.command, hand_email),
             ]
         },
         fallbacks=[CommandHandler('start', start)],
