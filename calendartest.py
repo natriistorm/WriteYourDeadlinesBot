@@ -62,16 +62,20 @@ class GoogleCalendar(object):
         events = events_result.get('items', [])
         answer = []
         if not events:
-            answer.append('Нет предстоящих событий.')
+            answer.append('There are.')
 
         for event in events:
-            start = event['start'].get('dateTime',
-                                       event['start'].get('date'))
-            output_str_date_array = start.split('T')[0].split('-')
-            output_str_hour = start.split('T')[1].split(':')[0]
-            final_output = output_str_hour + ':00'
-            for i in range(3):
-                final_output += '-' + output_str_date_array[2 - i]
+            start = event['start'].get('dateTime', event['start'].get('date'))
+            try:
+                output_str_date_array, output_str_hour = start.split('T')
+                output_str_date_array = output_str_date_array.split('-')
+                output_str_hour = output_str_hour.split(':')[0]
+                final_output = output_str_hour + ':00'
+                for i in range(3):
+                    final_output += '-' + output_str_date_array[2 - i]
+            except:
+                final_output = start
+
             answer.append((final_output, event['summary']))
         for event in answer:
             yield event
