@@ -111,7 +111,7 @@ def main() -> None:
     dispatcher = updater.dispatcher
 
     conv_handler = ConversationHandler(
-        entry_points=[CommandHandler('start', start), CommandHandler('help', helper)],
+        entry_points=[CommandHandler('start', start)],
         states={
             BEGIN_STAGE: [
                 CallbackQueryHandler(name, pattern='^' + str(1) + '$'),
